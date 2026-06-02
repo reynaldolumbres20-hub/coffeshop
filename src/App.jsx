@@ -194,26 +194,25 @@ function App() {
           <div className="nav-logo">
             <div className="logo-3d">
               <span className="logo-icon">☕❤️</span>
-              <span className="logo-text">COFFEE LOVER SHOP</span>
+              <span className="logo-text">COFFEE LOVER</span>
             </div>
-            
           </div>
           <div className="nav-links">
             <button className={`nav-link-glow ${activeTab === 'pos' ? 'active' : ''}`} onClick={() => setActiveTab('pos')}>
               <span className="nav-icon">🛒</span>
-              <span>POS SYSTEM</span>
+              <span className="nav-text">POS</span>
             </button>
             <button className={`nav-link-glow ${activeTab === 'orders' ? 'active' : ''}`} onClick={() => setActiveTab('orders')}>
               <span className="nav-icon">📜</span>
-              <span>ORDERS</span>
+              <span className="nav-text">ORDERS</span>
             </button>
             <button className={`nav-link-glow ${activeTab === 'inventory' ? 'active' : ''}`} onClick={() => setActiveTab('inventory')}>
               <span className="nav-icon">📊</span>
-              <span>INVENTORY</span>
+              <span className="nav-text">INVENTORY</span>
             </button>
             <button className={`nav-link-glow ${activeTab === 'reports' ? 'active' : ''}`} onClick={() => setActiveTab('reports')}>
               <span className="nav-icon">📈</span>
-              <span>REPORT</span>
+              <span className="nav-text">REPORT</span>
             </button>
           </div>
           <div className="nav-stats-glow">
@@ -232,38 +231,36 @@ function App() {
           </div>
         </nav>
 
-        {/* POS SECTION - SINGLE LARGE BOX */}
+        {/* POS SECTION */}
         {activeTab === 'pos' && (
           <div className="unified-box">
-            <div className="pos-layout">
-              {/* LEFT SIDE - MENU */}
-              <div className="pos-menu-section">
-                <div className="card-header-glow">
-                  <h3><span className="glow-text">✨🔥</span> OUR MENU</h3>
-                  <div className="category-pills-glow">
-                    {categories.map(cat => (
-                      <button
-                        key={cat}
-                        className={`pill-glow ${selectedCategory === cat ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(cat)}
-                      >
-                        {cat === 'all' ? 'ALL' : cat.toUpperCase()}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="menu-grid-premium">
+            <div className="pos-header">
+              <h3>✨ OUR MENU</h3>
+              <div className="category-scroll">
+                {categories.map(cat => (
+                  <button
+                    key={cat}
+                    className={`pill-glow ${selectedCategory === cat ? 'active' : ''}`}
+                    onClick={() => setSelectedCategory(cat)}
+                  >
+                    {cat === 'all' ? 'ALL' : cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div className="pos-body">
+              {/* MENU SECTION */}
+              <div className="menu-section">
+                <div className="menu-grid">
                   {filteredMenu.map(item => (
-                    <div key={item.id} className="premium-product-card" onClick={() => addToCart(item)}>
-                      <div className="card-glow-effect"></div>
-                      <div className="product-icon-glow">{item.icon}</div>
-                      <div className="product-info-glow">
-                        <div className="product-name-glow">{item.name}</div>
-                        <div className="product-meta-glow">
-                          <span className="product-price-glow">₱{item.price}</span>
-                          <span className={`product-stock-glow ${item.stock < 10 ? 'low' : ''}`}>
-                            {item.stock} left
-                          </span>
+                    <div key={item.id} className="product-card" onClick={() => addToCart(item)}>
+                      <div className="product-icon">{item.icon}</div>
+                      <div className="product-details">
+                        <div className="product-name">{item.name}</div>
+                        <div className="product-price">₱{item.price}</div>
+                        <div className={`product-stock ${item.stock < 10 ? 'low' : ''}`}>
+                          {item.stock} left
                         </div>
                       </div>
                     </div>
@@ -271,43 +268,43 @@ function App() {
                 </div>
               </div>
 
-              {/* RIGHT SIDE - CART */}
-              <div className="pos-cart-section">
-                <div className="card-header-glow">
-                  <h3><span className="glow-text">🛒🔥</span> CURRENT ORDER</h3>
-                  <span className="cart-badge-glow">{cart.length} ITEMS</span>
+              {/* CART SECTION */}
+              <div className="cart-section">
+                <div className="cart-header">
+                  <h3>🛒 CURRENT ORDER</h3>
+                  <span className="cart-count">{cart.length} items</span>
                 </div>
                 {cart.length === 0 ? (
-                  <div className="empty-cart-glow">
-                    <div className="empty-icon-glow">☕❤️</div>
+                  <div className="empty-cart">
+                    <div className="empty-icon">☕</div>
                     <p>Cart is empty</p>
-                    <small>Click any delicious item above</small>
+                    <small>Click any item above</small>
                   </div>
                 ) : (
                   <>
-                    <div className="cart-list-glow">
+                    <div className="cart-items">
                       {cart.map(item => (
-                        <div key={item.id} className="cart-item-glow">
-                          <div className="cart-item-info-glow">
-                            <div className="cart-item-name-glow">{item.icon} {item.name}</div>
-                            <div className="cart-item-price-glow">₱{item.price}</div>
+                        <div key={item.id} className="cart-item">
+                          <div className="cart-item-info">
+                            <span className="cart-item-name">{item.icon} {item.name}</span>
+                            <span className="cart-item-price">₱{item.price}</span>
                           </div>
-                          <div className="cart-actions-glow">
-                            <button className="qty-glow" onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-                            <span className="qty-num-glow">{item.quantity}</span>
-                            <button className="qty-glow" onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
-                            <button className="remove-glow" onClick={() => removeFromCart(item.id)}>✕</button>
+                          <div className="cart-item-actions">
+                            <button className="qty-btn" onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                            <span className="qty-num">{item.quantity}</span>
+                            <button className="qty-btn" onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                            <button className="remove-btn" onClick={() => removeFromCart(item.id)}>✕</button>
                           </div>
-                          <div className="cart-item-total-glow">₱{item.price * item.quantity}</div>
+                          <div className="cart-item-total">₱{item.price * item.quantity}</div>
                         </div>
                       ))}
                     </div>
-                    <div className="cart-total-glow">
-                      <span>TOTAL AMOUNT</span>
+                    <div className="cart-total">
+                      <span>TOTAL</span>
                       <strong>₱{calculateTotal().toFixed(2)}</strong>
                     </div>
-                    <button className="checkout-glow" onClick={() => setShowPaymentModal(true)}>
-                      <span>💳⚡</span> PROCEED TO CHECKOUT
+                    <button className="checkout-btn" onClick={() => setShowPaymentModal(true)}>
+                      💳 CHECKOUT
                     </button>
                   </>
                 )}
@@ -318,18 +315,18 @@ function App() {
 
         {/* Payment Modal */}
         {showPaymentModal && (
-          <div className="modal-cyber" onClick={() => setShowPaymentModal(false)}>
-            <div className="modal-cyber-content" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-cyber-header">
-                <h3>💳 PAYMENT GATEWAY</h3>
-                <button className="modal-cyber-close" onClick={() => setShowPaymentModal(false)}>✕</button>
+          <div className="modal-overlay" onClick={() => setShowPaymentModal(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>💳 PAYMENT</h3>
+                <button className="modal-close" onClick={() => setShowPaymentModal(false)}>✕</button>
               </div>
-              <div className="modal-cyber-body">
-                <div className="payment-cyber-total">
+              <div className="modal-body">
+                <div className="payment-total">
                   <span>TOTAL AMOUNT</span>
                   <strong>₱{calculateTotal().toFixed(2)}</strong>
                 </div>
-                <div className="payment-cyber-input">
+                <div className="payment-input">
                   <label>CASH RECEIVED</label>
                   <input 
                     type="number" 
@@ -340,18 +337,18 @@ function App() {
                   />
                 </div>
                 {paymentAmount && parseFloat(paymentAmount) >= calculateTotal() && (
-                  <div className="payment-cyber-change">
+                  <div className="payment-change">
                     <span>CHANGE</span>
                     <strong>₱{(parseFloat(paymentAmount) - calculateTotal()).toFixed(2)}</strong>
                   </div>
                 )}
                 {paymentAmount && parseFloat(paymentAmount) < calculateTotal() && (
-                  <div className="payment-cyber-error">⚠️ INSUFFICIENT! Need ₱{calculateTotal().toFixed(2)}</div>
+                  <div className="payment-error">⚠️ INSUFFICIENT!</div>
                 )}
               </div>
-              <div className="modal-cyber-footer">
-                <button className="btn-cyber-cancel" onClick={() => setShowPaymentModal(false)}>CANCEL</button>
-                <button className="btn-cyber-confirm" onClick={handlePayment}>CONFIRM PAYMENT</button>
+              <div className="modal-footer">
+                <button className="btn-cancel" onClick={() => setShowPaymentModal(false)}>CANCEL</button>
+                <button className="btn-confirm" onClick={handlePayment}>CONFIRM</button>
               </div>
             </div>
           </div>
@@ -359,39 +356,39 @@ function App() {
 
         {/* Orders Section */}
         {activeTab === 'orders' && (
-          <div className="orders-section">
-            <div className="card-header-glow">
-              <h3><span className="glow-text">📜🔥</span> ORDER HISTORY</h3>
-              <span className="order-count-glow">{orders.length} TOTAL ORDERS</span>
+          <div className="orders-box">
+            <div className="orders-header">
+              <h3>📜 ORDER HISTORY</h3>
+              <span className="orders-count">{orders.length} orders</span>
             </div>
             {orders.length === 0 ? (
-              <div className="empty-state-glow">
-                <div className="empty-icon-glow">📭</div>
+              <div className="empty-state">
+                <div className="empty-icon">📭</div>
                 <p>No orders yet</p>
                 <small>Start taking orders from POS</small>
               </div>
             ) : (
-              <div className="orders-grid-glow">
+              <div className="orders-list">
                 {orders.map(order => (
-                  <div key={order.id} className="order-card-glow">
-                    <div className="order-header-glow">
-                      <span className="order-id-glow">#CLS-{order.id.toString().slice(-6)}</span>
-                      <span className="order-date-glow">{order.timestamp}</span>
+                  <div key={order.id} className="order-card">
+                    <div className="order-header">
+                      <span className="order-id">#CLS-{order.id.toString().slice(-6)}</span>
+                      <span className="order-date">{order.timestamp}</span>
                     </div>
-                    <div className="order-items-glow">
+                    <div className="order-items">
                       {order.items.map((item, idx) => (
-                        <div key={idx} className="order-item-glow">
-                          <span>{item.icon} {item.name} × {item.quantity}</span>
+                        <div key={idx} className="order-item">
+                          <span>{item.icon} {item.name} x{item.quantity}</span>
                           <span>₱{item.price * item.quantity}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="order-payment-glow">
+                    <div className="order-payment">
                       <div><span>TOTAL:</span> <strong>₱{order.total.toFixed(2)}</strong></div>
                       <div><span>CASH:</span> ₱{order.payment.toFixed(2)}</div>
-                      <div className="order-change-glow"><span>CHANGE:</span> ₱{order.change.toFixed(2)}</div>
+                      <div className="order-change"><span>CHANGE:</span> ₱{order.change.toFixed(2)}</div>
                     </div>
-                    <div className="order-status-glow completed">✓ COMPLETED</div>
+                    <div className="order-status">✓ COMPLETED</div>
                   </div>
                 ))}
               </div>
@@ -399,18 +396,18 @@ function App() {
           </div>
         )}
 
-        {/* Inventory Section - Fixed Table */}
+        {/* Inventory Section */}
         {activeTab === 'inventory' && (
-          <div className="orders-section">
-            <div className="card-header-glow">
-              <h3><span className="glow-text">📊🔥</span> INVENTORY MANAGEMENT</h3>
-              <div className="inventory-badges-glow">
-                <span>⚠️ LOW STOCK: {lowStockItems.length}</span>
-                <span>📦 TOTAL ITEMS: {menu.length}</span>
+          <div className="inventory-box">
+            <div className="inventory-header">
+              <h3>📊 INVENTORY</h3>
+              <div className="inventory-badges">
+                <span>⚠️ LOW: {lowStockItems.length}</span>
+                <span>📦 TOTAL: {menu.length}</span>
               </div>
             </div>
-            <div className="fixed-table-container">
-              <table className="premium-table-glow">
+            <div className="table-wrapper">
+              <table className="inventory-table">
                 <thead>
                   <tr>
                     <th>ITEM</th>
@@ -424,14 +421,14 @@ function App() {
                 <tbody>
                   {menu.map(item => (
                     <tr key={item.id}>
-                      <td><span className="item-icon-glow">{item.icon}</span> {item.name}</td>
+                      <td><span className="item-icon">{item.icon}</span> {item.name}</td>
                       <td>{item.category}</td>
                       <td>₱{item.price}</td>
-                      <td className={item.stock < 10 ? 'warning-glow' : ''}>{item.stock}</td>
+                      <td className={item.stock < 10 ? 'warning' : ''}>{item.stock}</td>
                       <td>{item.sales}</td>
                       <td>
-                        <span className={`stock-status-glow ${item.stock === 0 ? 'out' : item.stock < 10 ? 'low' : 'good'}`}>
-                          {item.stock === 0 ? 'OUT OF STOCK' : item.stock < 10 ? 'LOW STOCK' : 'IN STOCK'}
+                        <span className={`status-badge ${item.stock === 0 ? 'out' : item.stock < 10 ? 'low' : 'good'}`}>
+                          {item.stock === 0 ? 'OUT' : item.stock < 10 ? 'LOW' : 'GOOD'}
                         </span>
                       </td>
                     </tr>
@@ -444,37 +441,32 @@ function App() {
 
         {/* Report Section */}
         {activeTab === 'reports' && (
-          <div className="report-section">
-            <div className="card-header-glow">
-              <h3><span className="glow-text">📈🔥</span> SALES REPORT</h3>
-              <button className="print-glow-btn" onClick={handlePrintReport}>
-                🖨️ PRINT REPORT
-              </button>
+          <div className="report-box">
+            <div className="report-header">
+              <h3>📈 SALES REPORT</h3>
+              <button className="print-btn" onClick={handlePrintReport}>🖨️ PRINT</button>
             </div>
-            <div className="report-content-glow" ref={reportRef}>
-            
-              
-              <div className="report-summary-glow">
-                <div className="summary-card-glow">
+            <div className="report-content" ref={reportRef}>
+              <div className="report-summary">
+                <div className="summary-card">
                   <span>TOTAL REVENUE</span>
                   <strong>₱{totalSales.toLocaleString()}</strong>
                 </div>
-                <div className="summary-card-glow">
+                <div className="summary-card">
                   <span>TOTAL ORDERS</span>
                   <strong>{totalOrders}</strong>
                 </div>
-                <div className="summary-card-glow">
+                <div className="summary-card">
                   <span>ITEMS SOLD</span>
                   <strong>{totalItemsSold}</strong>
                 </div>
-                <div className="summary-card-glow">
+                <div className="summary-card">
                   <span>AVERAGE ORDER</span>
                   <strong>₱{(totalSales / totalOrders || 0).toFixed(2)}</strong>
                 </div>
               </div>
-
-              <div className="report-table-glow">
-                <h4>🏆 TOP SELLING ITEMS</h4>
+              <div className="report-table">
+                <h4>🏆 TOP SELLING</h4>
                 <table>
                   <thead>
                     <tr><th>RANK</th><th>ITEM</th><th>SOLD</th><th>REVENUE</th></tr>
@@ -491,47 +483,46 @@ function App() {
                   </tbody>
                 </table>
               </div>
-
-              <div className="report-footer-glow">
+              <div className="report-footer">
                 <p>Thank you for choosing COFFEE LOVER SHOP!</p>
-                <p><strong>🔥 MAANGAS COFFEE - THE BADDEST BREW IN TOWN 🔥</strong></p>
+                <p>🔥 THE BADDEST BREW IN TOWN 🔥</p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Receipt Modal - Maayos na Format */}
+        {/* Receipt Modal */}
         {showReceipt && currentOrder && (
-          <div className="modal-cyber" onClick={() => setShowReceipt(false)}>
-            <div className="receipt-cyber" onClick={(e) => e.stopPropagation()}>
-              <div className="receipt-print-area" ref={receiptRef}>
-                <div className="receipt-header-glow">
-                  <div className="receipt-logo-glow">☕❤️</div>
+          <div className="modal-overlay" onClick={() => setShowReceipt(false)}>
+            <div className="receipt-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="receipt-content" ref={receiptRef}>
+                <div className="receipt-header">
+                  <div className="receipt-logo">☕❤️</div>
                   <h3>COFFEE LOVER SHOP</h3>
                   <p>MAANGAS PREMIUM COFFEE</p>
                 </div>
-                <div className="receipt-body-glow">
-                  <div className="receipt-row-glow"><span>ORDER #</span><strong>CLS-{currentOrder.id.toString().slice(-6)}</strong></div>
-                  <div className="receipt-row-glow"><span>DATE</span><span>{currentOrder.timestamp}</span></div>
-                  <div className="receipt-divider-glow"></div>
+                <div className="receipt-body">
+                  <div className="receipt-row"><span>ORDER #</span><strong>CLS-{currentOrder.id.toString().slice(-6)}</strong></div>
+                  <div className="receipt-row"><span>DATE</span><span>{currentOrder.timestamp}</span></div>
+                  <div className="receipt-divider"></div>
                   {currentOrder.items.map((item, idx) => (
-                    <div key={idx} className="receipt-item-glow">
+                    <div key={idx} className="receipt-item">
                       <span>{item.name} x {item.quantity}</span>
                       <span>₱{(item.price * item.quantity).toFixed(2)}</span>
                     </div>
                   ))}
-                  <div className="receipt-divider-glow"></div>
-                  <div className="receipt-payment-glow">
+                  <div className="receipt-divider"></div>
+                  <div className="receipt-payment">
                     <div><span>TOTAL</span><span>₱{currentOrder.total.toFixed(2)}</span></div>
                     <div><span>CASH</span><span>₱{currentOrder.payment.toFixed(2)}</span></div>
-                    <div className="receipt-change-glow"><span>CHANGE</span><span>₱{currentOrder.change.toFixed(2)}</span></div>
+                    <div className="receipt-change"><span>CHANGE</span><span>₱{currentOrder.change.toFixed(2)}</span></div>
                   </div>
-                  <div className="receipt-footer-glow">☕ THANK YOU! COME AGAIN ❤️</div>
+                  <div className="receipt-footer">☕ THANK YOU! COME AGAIN ❤️</div>
                 </div>
               </div>
-              <div className="receipt-actions-glow">
-                <button className="print-glow-btn" onClick={handlePrintReceipt}>🖨️ PRINT</button>
-                <button className="close-glow-btn" onClick={() => setShowReceipt(false)}>CLOSE</button>
+              <div className="receipt-actions">
+                <button className="print-receipt" onClick={handlePrintReceipt}>🖨️ PRINT</button>
+                <button className="close-receipt" onClick={() => setShowReceipt(false)}>CLOSE</button>
               </div>
             </div>
           </div>
